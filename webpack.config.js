@@ -16,6 +16,7 @@ module.exports = {
     client: {
       progress: true,
     },
+    historyApiFallback: true,
   },
 
   module: {
