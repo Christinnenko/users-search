@@ -1,6 +1,6 @@
 # Интерфейс поиска пользователей
 
-## Деплой проекта: https://christinnenko.github.io/users-search/
+## Деплой проекта: https://main--sp-users-search.netlify.app/
 
 ### Ожидаемое время выполнения: 20 часов
 
