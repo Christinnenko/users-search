@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
@@ -54,8 +55,30 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              outputPath: "images",
+            },
+          },
+        ],
+      }, // Закрывающая скобка добавлена здесь
+      {
+        test: /\.svg$/,
         use: ["file-loader"],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              outputPath: "fonts",
+            },
+          },
+        ],
       },
     ],
   },
@@ -63,6 +86,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       favicon: "./public/favicon.ico",
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: "public/fonts", to: "fonts" }],
     }),
   ],
 };

@@ -1,10 +1,10 @@
 import React from "react";
-import { Button } from "../../components/Button/Button.jsx";
+import { Sort } from "../../components/Sort/Sort.jsx";
 
 export const NotFoundPage = () => {
   return (
     <>
-      <Button />
+      <Sort />
     </>
   );
 };
