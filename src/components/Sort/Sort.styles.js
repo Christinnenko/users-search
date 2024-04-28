@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { blueColor } from "../../App.styles";
+import { backgroundColor, contentColor, hoverBackgroundColor } from "../../App.styles";
 
 export const SortElement = styled.div`
   display: flex;
@@ -11,7 +11,8 @@ export const SortElement = styled.div`
 
 export const SortTitle = styled.h2`
   font-size: 22px;
-  color: #fff;
+  color: ${contentColor};
+  text-align: center;
 `;
 
 export const SortWrapper = styled.div`
@@ -24,39 +25,22 @@ export const SortMenu = styled.div`
   top: 111%;
   left: 0;
   width: 100%;
-  background-color: #fff;
+  background-color: ${contentColor};
   border-radius: 12px;
+  padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   z-index: 1;
 `;
 
 export const SortItem = styled.div`
   padding: 8px 16px;
-  color: #577c9b;
+  color: ${backgroundColor};
   font-size: 20px;
   cursor: pointer;
 
-  &:hover {
-    background-color: #f0f0f0;
+  &:hover,
+  &:focus {
+    background-color: ${hoverBackgroundColor};
     border-radius: 12px;
-  }
-`;
-
-export const SortButton = styled.button`
-  width: 30vh;
-  padding: 10px;
-  text-align: center;
-  border: 4px solid #fff;
-  border-radius: 12px;
-  font-size: 22px;
-  transition: 0.5s;
-  background-color: ${blueColor};
-  y: "Jost", sans-serif;
-  color: #fff;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #fff;
-    color: ${blueColor};
   }
 `;

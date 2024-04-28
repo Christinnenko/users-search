@@ -2,7 +2,7 @@
 
 const baseUrl = "https://api.github.com/search/users?q=";
 
-// Получение списка пользователей с сортировкой и пагинацией
+// Получение списка пользователей (сортировка и пагинация происходит на строне сервера)
 export const getUsersByUserName = async ({ userName }) => {
   const perPage = 15; //три колонки по 5 пользователей
   // userName, sortBy, pageNumber - принимает функция

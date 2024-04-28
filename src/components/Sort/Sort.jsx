@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import * as S from "./Sort.styles.js";
+import { Button } from "../Button/Button.jsx";
 
 export function Sort() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,8 @@ export function Sort() {
     };
   }, [wrapperRef]);
 
-  const toggleSort = () => {
+  const toggleSort = event => {
+    event.stopPropagation();
     setIsOpen(!isOpen);
   };
 
@@ -39,7 +41,7 @@ export function Sort() {
             <S.SortItem onClick={() => handleItemClick("по возрастанию")}>по возрастанию</S.SortItem>
           </S.SortMenu>
         )}
-        <S.SortButton onClick={toggleSort}>{selectedItem}</S.SortButton>
+        <Button onClick={toggleSort}>{selectedItem}</Button>
       </S.SortWrapper>
     </S.SortElement>
   );

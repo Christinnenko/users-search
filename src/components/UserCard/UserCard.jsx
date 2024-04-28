@@ -1,11 +1,14 @@
 import React from "react";
 import * as S from "./UserCard.styles.js";
 
-export function UserCard({ user }) {
+export function UserCard({ user, openModal }) {
+  const handleClick = () => {
+    openModal(user);
+  };
+
   return (
-    <S.UserCardWrap>
-      <S.UserAvatar src={user.avatar_url} alt="Аватар пользователя" />
-      <p>{user.login}</p>
+    <S.UserCardWrap onClick={handleClick}>
+      <S.UserLogin>{user.login}</S.UserLogin>
     </S.UserCardWrap>
   );
 }
