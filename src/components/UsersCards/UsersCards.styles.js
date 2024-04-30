@@ -8,7 +8,6 @@ export const UserCardsWrapper = styled.div`
   border-radius: 12px;
   margin: 0 60px;
   width: 100vh;
-  align-items: flex-end;
 `;
 
 export const UserCardsWrap = styled.div`

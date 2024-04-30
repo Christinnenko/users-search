@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Sort } from "../../components/Sort/Sort.jsx";
 import { Search } from "../../components/Search/Search.jsx";
 import * as S from "./SearchPage.styles.js";
@@ -15,86 +15,98 @@ export const SearchPage = () => {
   const [errorMessage, setErrorMessage] = useState("Для поиска - введите логин пользователя");
   const [pageNumber, setPageNumber] = useState(1);
   const [sortBy] = useState("desc");
+  const [totalPages, setTotalPages] = useState(0);
 
-  const handleChange = event => {
+  const searchValueRef = useRef("");
+
+  useEffect(() => {
+    searchValueRef.current = searchValue;
+  }, [searchValue]);
+
+  const handleChange = useCallback(event => {
     setSearchValue(event.target.value);
-  };
+  }, []);
 
-  /* Для валидации: Имена пользователей для учетных записей на GitHub.com могут содержать только буквенно-цифровые символы и дефисы (-).
-  Источник: https://docs.github.com/en/enterprise-cloud@latest/admin/identity-and-access-management/iam-configuration-reference/username-considerations-for-external-authentication
-  [1 абзац раздела "About username normalization"] */
-
-  const isValidUsername = value => {
+  const isValidUsername = useCallback(value => {
     const regExp = /^[a-zA-Z0-9-]*$/;
     return regExp.test(value);
-  };
+  }, []);
 
-  const handleSearch = async sortBy => {
-    if (!searchValue) {
-      setErrorMessage("Для поиска - введите логин пользователя");
-      return;
-    }
-    if (!isValidUsername(searchValue)) {
-      setErrorMessage("Логин пользователя может содержать только латинские буквы, цифры и дефисы (-).");
-      return;
-    }
-    try {
-      const { items } = await getUsersByUserName({
-        userName: searchValue,
-        sortBy: sortBy, // Используем значение sortBy из состояния
-        perPage: perPage,
-        pageNumber: pageNumber,
-      });
-      if (items.length > 0) {
-        setUsers(items);
-        setErrorMessage("");
-      } else {
-        setUsers([]);
-        setErrorMessage("Пользователь с указанным логином не найден");
+  const handleSearch = useCallback(
+    async sortBy => {
+      const inputValue = searchValueRef.current;
+      if (!inputValue) {
+        setErrorMessage("Для поиска - введите логин пользователя");
+        return;
       }
-    } catch (err) {
-      console.error("Ошибка при поиске пользователей:", err);
-      if (err.response && err.response.status) {
-        switch (err.response.status) {
-          case 403:
-            setErrorMessage("Вы превысили лимит запросов, попробуйте позже");
-            break;
-          case 422:
-            setErrorMessage("Логин введен некорректно. Попробуйте еще раз");
-            break;
-          case 503:
-            setErrorMessage("Ошибка сервера, попробуйте позже");
-            break;
-          default:
-            setErrorMessage("Произошла ошибка. Повторите поиск позже");
+      if (!isValidUsername(inputValue)) {
+        setErrorMessage("Логин пользователя может содержать только латинские буквы, цифры и дефисы (-).");
+        return;
+      }
+      try {
+        const { items, totalCount } = await getUsersByUserName({
+          userName: inputValue,
+          sortBy: sortBy,
+          perPage: perPage,
+          pageNumber: pageNumber,
+        });
+        const calculatedTotalPages = Math.ceil(totalCount / perPage);
+        setTotalPages(calculatedTotalPages);
+        if (items.length > 0) {
+          setUsers(items);
+          setErrorMessage("");
+        } else {
+          setUsers([]);
+          setErrorMessage("Пользователь с указанным логином не найден");
         }
-      } else {
-        setErrorMessage("Произошла ошибка. Повторите поиск позже");
+      } catch (err) {
+        console.error("Ошибка при поиске пользователей:", err);
+        if (err.response && err.response.status) {
+          switch (err.response.status) {
+            case 403:
+              setErrorMessage("Вы превысили лимит запросов, попробуйте позже");
+              break;
+            case 422:
+              setErrorMessage("Логин введен некорректно. Попробуйте еще раз");
+              break;
+            case 503:
+              setErrorMessage("Ошибка сервера, попробуйте позже");
+              break;
+            default:
+              setErrorMessage("Произошла ошибка. Повторите поиск позже");
+          }
+        } else {
+          setErrorMessage("Произошла ошибка. Повторите поиск позже");
+        }
       }
-    }
-  };
+    },
+    [pageNumber, perPage, isValidUsername],
+  );
 
-  const handleSearchButtonClick = async () => {
-    await handleSearch();
-  };
+  const handleSearchButtonClick = useCallback(async () => {
+    await handleSearch(sortBy);
+  }, [handleSearch, sortBy]);
 
-  const handleEnterKeyPress = async event => {
-    if (event.key === "Enter") {
-      await handleSearch();
-    }
-  };
+  const handleEnterKeyPress = useCallback(
+    async event => {
+      if (event.key === "Enter") {
+        await handleSearch(sortBy);
+      }
+    },
+    [handleSearch, sortBy],
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const openModal = user => {
+  const openModal = useCallback(user => {
     setSelectedUser(user);
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setIsModalOpen(false);
-  };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,15 +114,15 @@ export const SearchPage = () => {
     };
 
     fetchData(); // Вызываем fetchData при изменении pageNumber
-  }, [pageNumber, sortBy]);
+  }, [pageNumber, sortBy, handleSearch]);
 
-  const handleNextPageClick = () => {
+  const handleNextPageClick = useCallback(() => {
     setPageNumber(prevPageNumber => prevPageNumber + 1);
-  };
+  }, []);
 
-  const handlePreviousPageClick = () => {
+  const handlePreviousPageClick = useCallback(() => {
     setPageNumber(prevPageNumber => prevPageNumber - 1);
-  };
+  }, []);
 
   return (
     <>
@@ -129,7 +141,12 @@ export const SearchPage = () => {
         {isModalOpen && <UserInfoModal user={selectedUser} closeModal={closeModal} />}
       </S.SearchPageWrap>
       {!errorMessage && (
-        <Pagination handleNextPageClick={handleNextPageClick} handlePreviousPageClick={handlePreviousPageClick} />
+        <Pagination
+          handleNextPageClick={handleNextPageClick}
+          handlePreviousPageClick={handlePreviousPageClick}
+          pageNumber={pageNumber}
+          totalPages={totalPages}
+        />
       )}
     </>
   );
