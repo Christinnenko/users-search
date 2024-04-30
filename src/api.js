@@ -3,13 +3,9 @@
 const baseUrl = "https://api.github.com/search/users?q=";
 
 // Получение списка пользователей (сортировка и пагинация происходит на строне сервера)
-export const getUsersByUserName = async ({ userName }) => {
-  const perPage = 15; //три колонки по 5 пользователей
-  // userName, sortBy, pageNumber - принимает функция
-  // `${baseUrl}${userName}&sort=repositories&order=${sortBy}&per_page=${perPage}&page=${pageNumber}`,
-
+export const getUsersByUserName = async ({ userName, sortBy, perPage, pageNumber }) => {
   const response = await fetch(
-    `${baseUrl}${userName}&sort=repositories&order=${"desc"}&per_page=${perPage}&page=${1}`,
+    `${baseUrl}${userName}&sort=repositories&order=${sortBy}&per_page=${perPage}&page=${pageNumber}`,
     {
       headers: {
         accept: "application/vnd.github+json",
@@ -20,7 +16,9 @@ export const getUsersByUserName = async ({ userName }) => {
     throw response;
   }
 
-  const usersList = await response.json();
-  const usersArray = usersList.items;
-  return usersArray;
+  const data = await response.json();
+  return {
+    items: data.items,
+    total_count: data.total_count,
+  };
 };

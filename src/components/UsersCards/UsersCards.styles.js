@@ -50,3 +50,8 @@ export const UsersImg = styled.img`
     rotate: 10deg;
   }
 `;
+
+export const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

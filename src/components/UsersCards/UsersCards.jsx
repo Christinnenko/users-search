@@ -18,7 +18,7 @@ export function UsersCards({ users, error, openModal }) {
           <S.UserError>{error}</S.UserError>
         </>
       ) : (
-        <>
+        <S.Wrap>
           <S.UserCardsWrapper>
             <S.UserCardsWrap>
               {users.map(user => (
@@ -27,7 +27,7 @@ export function UsersCards({ users, error, openModal }) {
             </S.UserCardsWrap>
             <S.UsersImg src={UsersImg} alt="Человечек-программист из конструктора" />
           </S.UserCardsWrapper>
-        </>
+        </S.Wrap>
       )}
     </>
   );

@@ -51,6 +51,7 @@ export const UserInfoLogin = styled.p`
   color: ${backgroundColor};
   text-align: end;
   font-weight: bold;
+  width: 275px;
 `;
 
 export const UserInfoTitleWrap = styled.div`
@@ -61,8 +62,8 @@ export const UserInfoTitleWrap = styled.div`
 export const UserInfoWrap = styled.div`
   display: flex;
   gap: 50px;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 16px;
 `;
 

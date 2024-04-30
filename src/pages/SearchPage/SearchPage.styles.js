@@ -11,4 +11,5 @@ export const SearchWrap = styled.div`
   display: flex;
   margin: 0 0 50px 0;
   gap: 50px;
+  flex-wrap: wrap;
 `;

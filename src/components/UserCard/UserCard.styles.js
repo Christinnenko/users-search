@@ -25,5 +25,5 @@ export const UserLogin = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
-  font-size: 30px;
+  font-size: 21px;
 `;

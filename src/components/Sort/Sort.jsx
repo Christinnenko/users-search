@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import * as S from "./Sort.styles.js";
 import { Button } from "../Button/Button.jsx";
 
-export function Sort() {
+export function Sort({ handleSearch }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("по убыванию");
   const wrapperRef = useRef(null);
@@ -29,6 +29,7 @@ export function Sort() {
   const handleItemClick = item => {
     setSelectedItem(item);
     setIsOpen(false);
+    handleSearch(item === "по убыванию" ? "desc" : "asc");
   };
 
   return (
