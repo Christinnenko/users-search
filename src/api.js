@@ -19,6 +19,6 @@ export const getUsersByUserName = async ({ userName, sortBy, perPage, pageNumber
   const data = await response.json();
   return {
     items: data.items,
-    total_count: data.total_count,
+    totalCount: data.total_count,
   };
 };

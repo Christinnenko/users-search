@@ -5,16 +5,17 @@ export const PaginationWrapper = styled.nav`
   display: flex;
   justify-content: center;
   justify-content: space-around;
+  align-items: center;
 `;
 
-export const PaginationItem = styled.ul`
+export const PaginationItem = styled.div`
   list-style-type: none;
-  display: flex;
   gap: 10px;
   margin: 30px 0;
+  visibility: ${props => (props.$isHidden ? "hidden" : "visible")};
 `;
 
-export const PaginationLink = styled.button`
+export const PaginationLink = styled.a`
   background-color: ${backgroundColor};
   color: ${contentColor};
   border: none;
@@ -32,9 +33,10 @@ export const PaginationLink = styled.button`
     background-color: ${contentColor};
     color: ${backgroundColor};
   }
+`;
 
-  /* &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  } */
+export const PaginationCurrentPage = styled.p`
+  color: ${contentColor};
+  font-size: 24px;
+  font-weight: bold;
 `;
