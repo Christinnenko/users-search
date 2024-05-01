@@ -23,6 +23,7 @@ export const SearchPage = () => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [searchPerformed, setSearchPerformed] = useState(false); //для отображения сортировки после выполненного поиска
 
   const searchValueRef = useRef("");
 
@@ -70,6 +71,7 @@ export const SearchPage = () => {
         if (items.length > 0) {
           setUsers(items);
           setErrorMessage("");
+          setSearchPerformed(true);
         } else {
           setUsers([]);
           setErrorMessage("Пользователь с указанным логином не найден");
@@ -147,7 +149,7 @@ export const SearchPage = () => {
       <Title>Cервис поиска пользователей GitHub</Title>
       <S.SearchPageWrap>
         <S.SearchWrap>
-          <Sort isDisabled={isDisabled} setSortBy={setSortBy} setPageNumber={setPageNumber} />
+          {searchPerformed && <Sort isDisabled={isDisabled} setSortBy={setSortBy} setPageNumber={setPageNumber} />}
           <Search
             onChange={handleChange}
             searchValue={searchValue}
