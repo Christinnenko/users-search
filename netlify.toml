@@ -1,4 +1,4 @@
-[[redirects]]
-from = "/*"
-to = "/pages/NotFoundPage/NotFoundPage.jsx"
-status = 404
+ [[redirects]]  
+  from = "/*"  
+  to = "/index.html"  
+  status = 200
