@@ -1,10 +1,22 @@
 {
-  "extends": ["eslint:recommended", "prettier", "react-app", "react-app/jest"],
-  "plugins": ["prettier", "css-in-js"],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["eslint:recommended", "prettier", "react-app", "react-app/jest", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["prettier", "css-in-js", "react"],
   "rules": {
     "camelcase": ["error", { "properties": "never" }],
     "prettier/prettier": "error",
     "eqeqeq": ["error", "always"],
-    "no-unused-vars": ["error", { "varsIgnorePattern": "^React$" }]
+    "no-unused-vars": ["error", { "varsIgnorePattern": "^React$" }],
+    "react/prop-types": "off"
   }
 }

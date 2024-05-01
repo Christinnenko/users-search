@@ -144,7 +144,7 @@ export const SearchPage = () => {
 
   return (
     <>
-      <Title children={`Cервис поиска пользователей GitHub`} />
+      <Title>Cервис поиска пользователей GitHub</Title>
       <S.SearchPageWrap>
         <S.SearchWrap>
           <Sort isDisabled={isDisabled} setSortBy={setSortBy} setPageNumber={setPageNumber} />
