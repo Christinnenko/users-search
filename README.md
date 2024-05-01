@@ -25,7 +25,7 @@
 
 ### Технологии:
 
-Проект разработан с использованием Styled Components (CSS-in-JS), JSX, React, React Router, REST API, npm, Webpack, Babel, ESLint
+Проект разработан с использованием Styled Components (CSS-in-JS), JSX, React, React Router, REST API, npm, Webpack, Babel, ESLint, Prettier
 
 ### Доступные команды
 
