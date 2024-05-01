@@ -11,6 +11,8 @@ import LoaderIcon from "../../../public/icons/loader.svg";
 
 export const SearchPage = () => {
   const [users, setUsers] = useState([]);
+  /* количество пользователей на странице - 15, можно задать другое значение (max 100 - согласно документации REST-API 
+    https://docs.github.com/ru/rest/search/search?apiVersion=2022-11-28#search-users [см. "per_page" в разделе "Search users"] */
   const [perPage] = useState(15);
   const [searchValue, setSearchValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("Для поиска - введите логин пользователя");

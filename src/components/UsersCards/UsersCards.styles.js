@@ -31,7 +31,7 @@ export const UserErrorImg = styled.img`
   width: 500px;
 `;
 
-export const DataImg = styled.img`
+export const MainImg = styled.img`
   height: 300px;
   transition: all 0.3s;
 

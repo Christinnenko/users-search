@@ -2,7 +2,7 @@ import React from "react";
 import { UserCard } from "../UserCard/UserCard.jsx";
 import * as S from "./UsersCards.styles.js";
 import ErrorImg from "../../../public/img/crush-lego.png";
-import DataImg from "../../../public/img/ninja.png";
+import MainImg from "../../../public/img/ninja.png";
 import UsersImg from "../../../public/img/developer.png";
 
 export function UsersCards({ users, error, openModal }) {
@@ -11,7 +11,7 @@ export function UsersCards({ users, error, openModal }) {
       {error ? (
         <>
           {error === "Для поиска - введите логин пользователя" ? (
-            <S.DataImg src={DataImg} alt="Человечек-ниндзя из конструктора" />
+            <S.MainImg src={MainImg} alt="Человечек-ниндзя из конструктора" />
           ) : (
             <S.UserErrorImg src={ErrorImg} alt="Разрушенный конструктор" />
           )}
