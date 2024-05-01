@@ -103,6 +103,7 @@ export const SearchPage = () => {
   const handleSearchButtonClick = useCallback(async () => {
     if (!isDisabled) {
       await handleSearch(sortBy);
+      setPageNumber(1);
     }
   }, [handleSearch, sortBy, isDisabled]);
 
@@ -110,6 +111,7 @@ export const SearchPage = () => {
     async event => {
       if (!isDisabled && event.key === "Enter") {
         await handleSearch(sortBy);
+        setPageNumber(1);
       }
     },
     [handleSearch, sortBy, isDisabled],
@@ -117,7 +119,6 @@ export const SearchPage = () => {
 
   const openModal = useCallback(user => {
     setSelectedUser(user);
-
     setIsModalOpen(true);
   }, []);
 
@@ -146,7 +147,7 @@ export const SearchPage = () => {
       <Title children={`Cервис поиска пользователей GitHub`} />
       <S.SearchPageWrap>
         <S.SearchWrap>
-          <Sort isDisabled={isDisabled} setSortBy={setSortBy} />
+          <Sort isDisabled={isDisabled} setSortBy={setSortBy} setPageNumber={setPageNumber} />
           <Search
             onChange={handleChange}
             searchValue={searchValue}

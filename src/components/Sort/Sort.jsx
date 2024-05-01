@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import * as S from "./Sort.styles.js";
 import { Button } from "../Button/Button.jsx";
 
-export function Sort({ isDisabled, setSortBy }) {
+export function Sort({ isDisabled, setSortBy, setPageNumber }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("по убыванию");
   const wrapperRef = useRef(null);
@@ -31,6 +31,7 @@ export function Sort({ isDisabled, setSortBy }) {
     setSelectedItem(item);
     setIsOpen(false);
     setSortBy(item === "по убыванию" ? "desc" : "asc");
+    setPageNumber(1);
   };
 
   return (
