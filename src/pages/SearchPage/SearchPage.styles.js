@@ -13,3 +13,7 @@ export const SearchWrap = styled.div`
   gap: 50px;
   flex-wrap: wrap;
 `;
+
+export const Loader = styled.img`
+  margin-top: 40px;
+`;

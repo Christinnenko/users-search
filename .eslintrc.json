@@ -1,10 +1,10 @@
 {
   "extends": ["eslint:recommended", "prettier", "react-app", "react-app/jest"],
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "css-in-js"],
   "rules": {
     "camelcase": ["error", { "properties": "never" }],
     "prettier/prettier": "error",
     "eqeqeq": ["error", "always"],
-    "no-unused-vars": ["error"]
+    "no-unused-vars": ["error", { "varsIgnorePattern": "^React$" }]
   }
 }

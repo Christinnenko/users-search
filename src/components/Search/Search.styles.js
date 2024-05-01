@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { backgroundColor, contentColor, hoverBackgroundColor } from "../../App.styles";
+import { backgroundColor, contentColor, hoverBackgroundColor } from "../../App.styles.js";
 
 export const SearchWrap = styled.div`
   display: flex;
@@ -17,9 +17,10 @@ export const SearchInput = styled.input`
   border-color: transparent;
   font-size: 40px;
   outline: none;
-  cursor: pointer;
   font-family: "Segoe UI", sans-serif;
   color: ${backgroundColor};
+  opacity: ${props => (props.$isDisabled ? "0.5" : "1")};
+  cursor: ${props => (props.$isDisabled ? "not-allowed" : "pointer")};
 
   &::placeholder {
     color: #5e5e5e8c;
@@ -33,6 +34,9 @@ export const SearchBtn = styled.img`
   padding: 10px;
   background: ${backgroundColor};
   background-color: ${contentColor};
+  opacity: ${props => (props.$isDisabled ? "0.5" : "1")};
+  cursor: ${props => (props.$isDisabled ? "not-allowed" : "pointer")};
+  transition: all 0.3s;
 
   &:hover,
   &:focus {

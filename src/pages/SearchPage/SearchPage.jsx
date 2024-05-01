@@ -7,6 +7,7 @@ import { getUsersByUserName } from "../../api.js";
 import { Title } from "../../components/Title/Title.jsx";
 import { UserInfoModal } from "../../components/Modals/UserInfoModal/UserInfoModal.jsx";
 import { Pagination } from "../../components/Pagination/Pagination.jsx";
+import LoaderIcon from "../../../public/icons/loader.svg";
 
 export const SearchPage = () => {
   const [users, setUsers] = useState([]);
@@ -14,18 +15,28 @@ export const SearchPage = () => {
   const [searchValue, setSearchValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("Для поиска - введите логин пользователя");
   const [pageNumber, setPageNumber] = useState(1);
-  const [sortBy] = useState("desc");
+  const [sortBy, setSortBy] = useState("desc");
   const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const searchValueRef = useRef("");
 
   useEffect(() => {
-    searchValueRef.current = searchValue;
-  }, [searchValue]);
+    if (!isDisabled) {
+      searchValueRef.current = searchValue;
+    }
+  }, [searchValue, isDisabled]);
 
   const handleChange = useCallback(event => {
     setSearchValue(event.target.value);
   }, []);
+
+  /* Для валидации: Имена пользователей для учетных записей на GitHub.com могут содержать только буквенно-цифровые символы и дефисы (-).
+  Источник: https://docs.github.com/en/enterprise-cloud@latest/admin/identity-and-access-management/iam-configuration-reference/username-considerations-for-external-authentication
+  [1 абзац раздела "About username normalization"] */
 
   const isValidUsername = useCallback(value => {
     const regExp = /^[a-zA-Z0-9-]*$/;
@@ -44,6 +55,8 @@ export const SearchPage = () => {
         return;
       }
       try {
+        setIsLoading(true);
+        setIsDisabled(true);
         const { items, totalCount } = await getUsersByUserName({
           userName: inputValue,
           sortBy: sortBy,
@@ -60,9 +73,8 @@ export const SearchPage = () => {
           setErrorMessage("Пользователь с указанным логином не найден");
         }
       } catch (err) {
-        console.error("Ошибка при поиске пользователей:", err);
-        if (err.response && err.response.status) {
-          switch (err.response.status) {
+        if (err.status) {
+          switch (err.status) {
             case 403:
               setErrorMessage("Вы превысили лимит запросов, попробуйте позже");
               break;
@@ -78,29 +90,32 @@ export const SearchPage = () => {
         } else {
           setErrorMessage("Произошла ошибка. Повторите поиск позже");
         }
+      } finally {
+        setIsLoading(false);
+        setIsDisabled(false);
       }
     },
     [pageNumber, perPage, isValidUsername],
   );
 
   const handleSearchButtonClick = useCallback(async () => {
-    await handleSearch(sortBy);
-  }, [handleSearch, sortBy]);
+    if (!isDisabled) {
+      await handleSearch(sortBy);
+    }
+  }, [handleSearch, sortBy, isDisabled]);
 
   const handleEnterKeyPress = useCallback(
     async event => {
-      if (event.key === "Enter") {
+      if (!isDisabled && event.key === "Enter") {
         await handleSearch(sortBy);
       }
     },
-    [handleSearch, sortBy],
+    [handleSearch, sortBy, isDisabled],
   );
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
 
   const openModal = useCallback(user => {
     setSelectedUser(user);
+
     setIsModalOpen(true);
   }, []);
 
@@ -113,7 +128,7 @@ export const SearchPage = () => {
       await handleSearch(sortBy);
     };
 
-    fetchData(); // Вызываем fetchData при изменении pageNumber
+    fetchData();
   }, [pageNumber, sortBy, handleSearch]);
 
   const handleNextPageClick = useCallback(() => {
@@ -129,25 +144,32 @@ export const SearchPage = () => {
       <Title children={`Cервис поиска пользователей GitHub`} />
       <S.SearchPageWrap>
         <S.SearchWrap>
-          <Sort handleSearch={handleSearch} />
+          <Sort isDisabled={isDisabled} setSortBy={setSortBy} />
           <Search
             onChange={handleChange}
             searchValue={searchValue}
             onSearch={handleSearchButtonClick}
             onEnterPress={handleEnterKeyPress}
+            isDisabled={isDisabled}
           />
         </S.SearchWrap>
-        <UsersCards users={users} error={errorMessage} openModal={openModal} />
-        {isModalOpen && <UserInfoModal user={selectedUser} closeModal={closeModal} />}
+        {isLoading ? (
+          <img src={LoaderIcon} alt="Изображение загрузки" />
+        ) : (
+          <>
+            <UsersCards users={users} error={errorMessage} openModal={openModal} />
+            {isModalOpen && <UserInfoModal user={selectedUser} closeModal={closeModal} />}
+            {!errorMessage && (
+              <Pagination
+                handleNextPageClick={handleNextPageClick}
+                handlePreviousPageClick={handlePreviousPageClick}
+                pageNumber={pageNumber}
+                totalPages={totalPages}
+              />
+            )}
+          </>
+        )}
       </S.SearchPageWrap>
-      {!errorMessage && (
-        <Pagination
-          handleNextPageClick={handleNextPageClick}
-          handlePreviousPageClick={handlePreviousPageClick}
-          pageNumber={pageNumber}
-          totalPages={totalPages}
-        />
-      )}
     </>
   );
 };

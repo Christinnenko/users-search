@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import * as S from "./Sort.styles.js";
 import { Button } from "../Button/Button.jsx";
 
-export function Sort({ handleSearch }) {
+export function Sort({ isDisabled, setSortBy }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("по убыванию");
   const wrapperRef = useRef(null);
@@ -21,15 +21,16 @@ export function Sort({ handleSearch }) {
     };
   }, [wrapperRef]);
 
-  const toggleSort = event => {
-    event.stopPropagation();
-    setIsOpen(!isOpen);
+  const toggleSort = () => {
+    if (!isDisabled) {
+      setIsOpen(!isOpen);
+    }
   };
 
   const handleItemClick = item => {
     setSelectedItem(item);
     setIsOpen(false);
-    handleSearch(item === "по убыванию" ? "desc" : "asc");
+    setSortBy(item === "по убыванию" ? "desc" : "asc");
   };
 
   return (
@@ -42,7 +43,9 @@ export function Sort({ handleSearch }) {
             <S.SortItem onClick={() => handleItemClick("по возрастанию")}>по возрастанию</S.SortItem>
           </S.SortMenu>
         )}
-        <Button onClick={toggleSort}>{selectedItem}</Button>
+        <Button onClick={toggleSort} isDisabled={isDisabled}>
+          {selectedItem}
+        </Button>
       </S.SortWrapper>
     </S.SortElement>
   );

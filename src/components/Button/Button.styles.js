@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { backgroundColor, contentColor } from "../../App.styles";
+import { backgroundColor, contentColor } from "../../App.styles.js";
 
 export const Button = styled.button`
   width: 30vh;
@@ -12,7 +12,9 @@ export const Button = styled.button`
   background-color: ${backgroundColor};
   font-family: "Segoe UI", sans-serif;
   color: ${contentColor};
-  cursor: pointer;
+  opacity: ${props => (props.$isDisabled ? "0.5" : "1")};
+  cursor: ${props => (props.$isDisabled ? "not-allowed" : "pointer")};
+  transition: all 0.3s;
 
   &:hover,
   &:focus {

@@ -37,6 +37,7 @@ export const SortItem = styled.div`
   color: ${backgroundColor};
   font-size: 20px;
   cursor: pointer;
+  transition: all 0.3s;
 
   &:hover,
   &:focus {

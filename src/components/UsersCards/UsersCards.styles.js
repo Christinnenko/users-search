@@ -24,7 +24,7 @@ export const UserError = styled.p`
   padding: 60px;
   width: 100vh;
   color: ${errorTextColor};
-  text-shadow: 2px 1px 6px #ffffff5e;
+  text-shadow: 2px 1px 1px #ffffff5e;
 `;
 
 export const UserErrorImg = styled.img`
@@ -33,6 +33,7 @@ export const UserErrorImg = styled.img`
 
 export const DataImg = styled.img`
   height: 300px;
+  transition: all 0.3s;
 
   &:hover,
   &:focus {
@@ -43,6 +44,7 @@ export const DataImg = styled.img`
 export const UsersImg = styled.img`
   height: 174px;
   width: 200px;
+  transition: all 0.3s;
 
   &:hover,
   &:focus {

@@ -104,3 +104,9 @@ export const UserInfoAvatar = styled.img`
   border-radius: 12px;
   border: 2px solid ${backgroundColor};
 `;
+
+export const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

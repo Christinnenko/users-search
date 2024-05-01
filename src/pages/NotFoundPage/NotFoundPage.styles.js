@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { contentColor } from "../../App.styles";
+import { contentColor } from "../../App.styles.js";
 
 export const NotFoundWrap = styled.div`
   display: flex;

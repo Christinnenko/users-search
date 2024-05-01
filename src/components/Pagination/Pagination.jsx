@@ -2,7 +2,6 @@ import React from "react";
 import * as S from "./Pagination.styles.js";
 
 export const Pagination = ({ handleNextPageClick, handlePreviousPageClick, pageNumber, totalPages }) => {
-  console.log("pageNumber:", pageNumber);
   return (
     <S.PaginationWrapper>
       <S.PaginationItem $isHidden={pageNumber === 1}>

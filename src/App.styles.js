@@ -6,7 +6,6 @@ export const errorTextColor = "#b50b02";
 export const hoverBackgroundColor = "#2222222e";
 
 export const GlobalStyle = createGlobalStyle`
-
 * {
   margin: 0;
   padding: 0;
@@ -34,7 +33,6 @@ body {
   font-family: "Segoe UI", sans-serif;
   background-color: ${backgroundColor};
 }
-
 
 @font-face {
   font-family: "Segoe UI";

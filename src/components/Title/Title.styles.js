@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { contentColor } from "../../App.styles";
+import { contentColor } from "../../App.styles.js";
 
 export const Title = styled.h1`
   font-size: ${props => props.fontSize || "50px"};

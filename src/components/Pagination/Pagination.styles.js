@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { backgroundColor, contentColor } from "../../App.styles";
+import { backgroundColor, contentColor } from "../../App.styles.js";
 
 export const PaginationWrapper = styled.nav`
   display: flex;
@@ -27,6 +27,7 @@ export const PaginationLink = styled.a`
   outline: none;
   font-size: 24px;
   border: 2px solid ${contentColor};
+  transition: all 0.3s;
 
   &:hover,
   &:focus {
@@ -39,4 +40,5 @@ export const PaginationCurrentPage = styled.p`
   color: ${contentColor};
   font-size: 24px;
   font-weight: bold;
+  margin: 0 50px;
 `;

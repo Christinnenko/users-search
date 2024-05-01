@@ -12,6 +12,7 @@ export const UserCardWrap = styled.div`
   padding: 10px;
   cursor: pointer;
   white-space: nowrap;
+  transition: all 0.3s;
 
   &:hover,
   &:focus {
