@@ -20,7 +20,7 @@ export const SortWrapper = styled.div`
   display: inline-block;
 `;
 
-export const SortMenu = styled.div`
+export const SortMenu = styled.ul`
   position: absolute;
   top: 111%;
   left: 0;
@@ -32,7 +32,7 @@ export const SortMenu = styled.div`
   z-index: 1;
 `;
 
-export const SortItem = styled.div`
+export const SortItem = styled.li`
   padding: 8px 16px;
   color: ${backgroundColor};
   font-size: 20px;
